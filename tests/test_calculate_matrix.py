@@ -10,8 +10,8 @@ from .bbox import Bbox
 
 def test_calculate_matrix(
     eps: float,
-    ground_truths: Mapping[str, List[GroundTruth[Bbox]]],
-    predictions: Mapping[str, List[Prediction[Bbox]]],
+    ground_truths: Mapping[str, List[GroundTruth[int, Bbox]]],
+    predictions: Mapping[str, List[Prediction[int, Bbox]]],
     cocoeval: COCOeval,
 ) -> None:
     cocoparams = cocoeval.eval["params"]

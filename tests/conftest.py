@@ -17,7 +17,7 @@ def eps() -> float:
 
 
 @pytest.fixture(scope="session")
-def ground_truths() -> DefaultDict[str, List[GroundTruth[Bbox]]]:
+def ground_truths() -> DefaultDict[str, List[GroundTruth[int, Bbox]]]:
     ground_truths = defaultdict(list)
     with open("instances_val2014.json") as f:
         for g in json.load(f)["annotations"]:
@@ -38,7 +38,7 @@ def ground_truths() -> DefaultDict[str, List[GroundTruth[Bbox]]]:
 
 
 @pytest.fixture(scope="session")
-def predictions() -> DefaultDict[str, List[Prediction[Bbox]]]:
+def predictions() -> DefaultDict[str, List[Prediction[int, Bbox]]]:
     predictions = defaultdict(list)
     with open("instances_val2014_fakebbox100_results.json") as f:
         for p in json.load(f):

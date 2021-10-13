@@ -2,6 +2,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import DefaultDict, Generic, Iterator, List, Protocol, Tuple, TypeVar
 
+C = TypeVar("C")
 R = TypeVar("R", bound="Region")
 
 
@@ -11,14 +12,14 @@ class Region(Protocol):
 
 
 @dataclass
-class GroundTruth(Generic[R]):
-    category: int
+class GroundTruth(Generic[C, R]):
+    category: C
     region: R
 
 
 @dataclass
-class Prediction(Generic[R]):
-    category: int
+class Prediction(Generic[C, R]):
+    category: C
     region: R
     score: float
 
@@ -31,10 +32,10 @@ class ConfusionMatrix:
 
 
 def calculate_matrix(
-    inputs: Iterator[Tuple[List[GroundTruth[R]], List[Prediction[R]]]],
+    inputs: Iterator[Tuple[List[GroundTruth[C, R]], List[Prediction[C, R]]]],
     iou_thresholds: List[float],
-) -> DefaultDict[Tuple[float, int], ConfusionMatrix]:
-    matrices: DefaultDict[Tuple[float, int], ConfusionMatrix] = defaultdict(
+) -> DefaultDict[Tuple[float, C], ConfusionMatrix]:
+    matrices: DefaultDict[Tuple[float, C], ConfusionMatrix] = defaultdict(
         ConfusionMatrix
     )
 
