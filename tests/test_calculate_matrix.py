@@ -30,10 +30,10 @@ def test_calculate_matrix(
         m = cocoparams.maxDets.index(100)
         if cocoeval.eval["recall"][t, k, a, m] >= 0:
             numpy.testing.assert_allclose(  # type:ignore
-                len(matrix.true_positives) / matrix.total,
+                len(matrix.true_positive_scores) / matrix.total,
                 cocoeval.eval["recall"][t, k, a, m],
                 atol=eps,
             )
         else:
             assert matrix.total == 0
-            assert matrix.true_positives == []
+            assert matrix.true_positive_scores == []

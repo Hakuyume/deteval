@@ -27,8 +27,8 @@ class Prediction(Generic[C, R]):
 @dataclass
 class ConfusionMatrix:
     total: int = 0
-    true_positives: List[float] = field(default_factory=list)
-    false_positives: List[float] = field(default_factory=list)
+    true_positive_scores: List[float] = field(default_factory=list)
+    false_positive_scores: List[float] = field(default_factory=list)
 
 
 def calculate_matrix(
@@ -68,13 +68,13 @@ def calculate_matrix(
             for (iou, gt_index, pred_index) in matches:
                 matrix = matrices[(iou_threshold, gts[gt_index].category)]
                 if iou >= iou_threshold:
-                    matrix.true_positives.append(preds[pred_index].score)
+                    matrix.true_positive_scores.append(preds[pred_index].score)
                 else:
-                    matrix.false_positives.append(preds[pred_index].score)
+                    matrix.false_positive_scores.append(preds[pred_index].score)
 
             for pred_index in range(len(preds)):
                 if pred_index not in pred_indices:
                     matrix = matrices[(iou_threshold, preds[pred_index].category)]
-                    matrix.false_positives.append(preds[pred_index].score)
+                    matrix.false_positive_scores.append(preds[pred_index].score)
 
     return matrices
